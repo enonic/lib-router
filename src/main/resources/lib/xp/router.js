@@ -11,7 +11,7 @@
  */
 
 var config = {
-    basePath: '/app/' + app.id
+    basePath: '/app/' + app.name
 };
 
 /**
