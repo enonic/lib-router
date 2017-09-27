@@ -1,0 +1,290 @@
+= Router Library
+
+image::https://img.shields.io/badge/xp-6.11+-blue.svg[role="right"]
+
+This library implements a simple HTTP router. Currently it can be used from an application's `main.js` controller.
+To start using this library, put the following into your `build.gradle` file:
+
+[source,groovy]
+----
+dependencies {
+  include 'com.enonic.lib:lib-router:1.0.0'
+}
+----
+
+== Usage
+
+The first thing you will need to do is create a router object in your controller.
+You can create multiple routers if you want to, but here we will illustrate the use of one single router.
+
+[source,js]
+----
+// Create a new router.
+var router = require('/lib/router')();
+----
+
+The next thing to do is dispatch all requests to the newly created router.
+
+[source,js]
+----
+// Dispatch all requests to the router.
+exports.service = function(req) {
+  return router.dispatch(req);
+};
+----
+
+=== Adding routes
+
+You can add routes that match a method and a path. The path can also have placeholders (or path-parameters) as shown later.
+Let's add some routes:
+
+[source,js]
+----
+// Add a route for the GET method.
+router.get('/persons', function(req) {
+  ...
+});
+
+// Add a route for the POST method.
+router.post('/persons', function(req) {
+  ...
+});
+----
+
+To add routes with path-parameters, use the curly brackets `{…}` notation:
+
+[source,js]
+----
+// Add a router for person.
+router.get('/persons/{id}', function(req) {
+
+  // Get the path parameter named "id".
+  var id = req.pathParams.id;
+  ...
+
+});
+----
+
+Or, if you want to restrict it to a regular expression:
+
+[source,js]
+----
+router.get('/persons/{id:[0-9]+}', function(req) {
+  ...
+});
+----
+
+To allow for matching all that starts with a path, you can use regular expressions for this too:
+
+[source,js]
+----
+router.get('/match/everything/{path:.+}', function(req) {
+  ...
+});
+----
+
+You can also match for all HTTP methods:
+
+[source,js]
+----
+router.all('/persons', function(req) {
+  ...
+});
+----
+
+And to match for a generic method and path:
+
+[source,js]
+----
+router.route('PATCH', '/persons', function(req) {
+  ...
+});
+----
+
+=== Filters
+
+Filters can be added to the routing. All filters are executed in the order that they were added.
+In each filter you can decide if you want to go to the next in the chain or just abort the execution chain.
+
+[source,js]
+----
+// Add a filter to just log the request.
+router.filter(function(req, next) {
+
+  // Log info.
+  log.info('Entered ' + req.path);
+
+  // Execute next and return.
+  return next(req);
+
+});
+----
+
+== API
+
+The following functions are defined in this library.
+
+=== `get`
+
+Adds a route that matches the GET method.
+
+*Parameters*
+
+* `pattern` (_string_) Path pattern to match.
+* `handler` (_function_) Handler to execute on match.
+
+*Example*
+
+[source,js]
+----
+router.get('/persons/{id}', function(req) {
+  ...
+});
+----
+
+=== `post`
+
+Adds a route that matches the POST method.
+
+*Parameters*
+
+* `pattern` (_string_) Path pattern to match.
+* `handler` (_function_) Handler to execute on match.
+
+*Example*
+
+[source,js]
+----
+router.post('/persons/{id}', function(req) {
+  ...
+});
+----
+
+=== `delete`
+
+Adds a route that matches the DELETE method.
+
+*Parameters*
+
+* `pattern` (_string_) Path pattern to match.
+* `handler` (_function_) Handler to execute on match.
+
+*Example*
+
+[source,js]
+----
+router.delete('/persons', function(req) {
+  ...
+});
+----
+
+=== `put`
+
+Adds a route that matches the PUT method.
+
+*Parameters*
+
+* `pattern` (_string_) Path pattern to match.
+* `handler` (_function_) Handler to execute on match.
+
+*Example*
+
+[source,js]
+----
+router.put('/persons', function(req) {
+  ...
+});
+----
+
+=== `head`
+
+Adds a route that matches the HEAD method.
+
+*Parameters*
+
+* `pattern` (_string_) Path pattern to match.
+* `handler` (_function_) Handler to execute on match.
+
+*Example*
+
+[source,js]
+----
+router.head('/persons/{id}', function(req) {
+  ...
+});
+----
+
+=== `all`
+
+Adds a route that matches all methods.
+
+*Parameters*
+
+* `pattern` (_string_) Path pattern to match.
+* `handler` (_function_) Handler to execute on match.
+
+*Example*
+
+[source,js]
+----
+router.all('/persons', function(req) {
+  ...
+});
+----
+
+=== `route`
+
+Adds a route to this router.
+
+*Parameters*
+
+* `method` (_string_) Method to match. * for all.
+* `pattern` (_string_) Path pattern to match.
+* `handler` (_function_) Handler to execute on match.
+
+*Example*
+
+[source,js]
+----
+router.route('POST', '/persons', function(req) {
+  ...
+});
+----
+
+=== `filter`
+
+Adds a filter to this router.
+
+*Parameters*
+
+* `filter` (_function_) Filter handler to execute.
+
+*Example*
+
+[source,js]
+----
+router.filter(function(req, next) {
+  ...
+});
+----
+
+=== `dispatch`
+
+Dispatch the request to this router.
+
+*Parameters*
+
+* `req` (_object_) HTTP request.
+
+*Example*
+
+[source,js]
+----
+exports.service = function(req) {
+  return router.dispatch(req);
+};
+----
+
+== Compatibility
+
+This library requires Enonic XP release *6.11.0* or higher.
