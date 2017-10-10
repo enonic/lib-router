@@ -153,7 +153,8 @@ Router.prototype.filter = function (filter) {
 };
 
 function handleRoute(scope, req) {
-    var match = scope.router.matches(req.method, req.path);
+    var path = Java.type('com.enonic.xp.portal.PortalRequestAccessor').get().getRawPath()
+    var match = scope.router.matches(req.method, path);
 
     if (!match) {
         return {
