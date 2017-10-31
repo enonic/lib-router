@@ -11,6 +11,12 @@ This library implements a simple HTTP router that can be used in XP app's main c
 
 See documentation here: https://enonic-docs.s3.amazonaws.com/com.enonic.lib/lib-router/index.html
 
+## Compatibility
+
+| Version | XP Version  | Download |
+|---------|-------------| -------- |
+| 1.0.0   | 6.11.x      | [Download](http://repo.enonic.com/public/com/enonic/lib/lib-router/1.0.0/lib-router-1.0.0.jar) |
+| 1.0.1   | 6.11.x      | [Download](http://repo.enonic.com/public/com/enonic/lib/lib-router/1.0.1/lib-router-1.0.1.jar) |
 
 ## Building
 
