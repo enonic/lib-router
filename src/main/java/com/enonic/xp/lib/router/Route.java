@@ -21,9 +21,9 @@ final class Route
 
     boolean matches( final String method, final String path )
     {
-        if ( path.equals( "/" ) )
+        if ( path.endsWith( "/" ) )
         {
-            return matches( method, "" );
+            return matches( method, path.substring( 0, path.length() - 1));
         }
 
         final boolean matchesMethod = ( this.method == null ) || this.method.equals( method );
