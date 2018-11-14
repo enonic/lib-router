@@ -9,7 +9,7 @@ To start using this library, put the following into your `build.gradle` file:
 [source,groovy]
 ----
 dependencies {
-  include 'com.enonic.lib:lib-router:1.0.0'
+  include 'com.enonic.lib:lib-router:2.0.0'
 }
 ----
 
@@ -29,11 +29,7 @@ The next thing to do is dispatch all requests to the newly created router.
 [source,js]
 ----
 // Dispatch all requests to the router.
-exports.get = function(req) {
-  return router.dispatch(req);
-};
-
-exports.post = function(req) {
+exports.all = function(req) {
   return router.dispatch(req);
 };
 ----
@@ -285,11 +281,11 @@ Dispatch the request to this router.
 
 [source,js]
 ----
-exports.get = function(req) {
+exports.all = function(req) {
   return router.dispatch(req);
 };
 ----
 
 == Compatibility
 
-This library requires Enonic XP release *6.11.0* or higher.
+This library requires Enonic XP release *7.0.0* or higher.
