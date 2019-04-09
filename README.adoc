@@ -17,7 +17,6 @@ This library implements a simple HTTP router that can be used in XP app's main c
 |1.0.1
 |6.11.x
 |com.enonic.lib:lib-router:1.0.1
-|===
 
 |1.0.0
 |6.11.x
