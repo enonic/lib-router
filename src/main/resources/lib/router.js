@@ -5,7 +5,7 @@
  *
  * @example
  * // Creates a new router.
- * var router = require('/lib/xp/router')();
+ * var router = require('/lib/router')();
  *
  * @module router
  */

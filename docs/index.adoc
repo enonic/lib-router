@@ -1,6 +1,6 @@
 = Router Library
 
-image::https://img.shields.io/badge/xp-6.11+-blue.svg[role="right"]
+image::https://img.shields.io/badge/xp-7.+-blue.svg[role="right"]
 
 This library implements a simple HTTP router. It should be used from an application's `main.js` controller.
 
