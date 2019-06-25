@@ -10,10 +10,6 @@
  * @module router
  */
 
-var config = {
-    basePath: '/webapp/' + app.name
-};
-
 /**
  * Creates a new router.
  *
@@ -38,7 +34,7 @@ function Router() {
  * @param handler Handler to execute on match.
  */
 Router.prototype.route = function (method, pattern, handler) {
-    this.router.add(method.toUpperCase(), config.basePath + '/' + pattern, handler);
+    this.router.add(method != null ? method.toUpperCase() : null, pattern || '', handler);
 };
 
 /**
@@ -153,8 +149,7 @@ Router.prototype.filter = function (filter) {
 };
 
 function handleRoute(scope, req) {
-    var path = Java.type('com.enonic.xp.portal.PortalRequestAccessor').get().getRawPath()
-    var match = scope.router.matches(req.method, path);
+    var match = scope.router.matches(req.method, req.rawPath, req.contextPath);
 
     if (!match) {
         return {
@@ -172,7 +167,7 @@ function nextInChain(scope, filters) {
         return handleRoute(scope, req);
     };
 
-    if (filters.length == 0) {
+    if (filters.length === 0) {
         return last;
     } else {
         return function (req) {

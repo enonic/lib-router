@@ -29,11 +29,7 @@ The next thing to do is dispatch all requests to the newly created router.
 [source,js]
 ----
 // Dispatch all requests to the router.
-exports.get = function(req) {
-  return router.dispatch(req);
-};
-
-exports.post = function(req) {
+exports.all = function(req) {
   return router.dispatch(req);
 };
 ----
@@ -285,7 +281,7 @@ Dispatch the request to this router.
 
 [source,js]
 ----
-exports.get = function(req) {
+exports.all = function(req) {
   return router.dispatch(req);
 };
 ----

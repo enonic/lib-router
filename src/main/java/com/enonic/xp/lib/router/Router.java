@@ -22,26 +22,26 @@ public final class Router
         this.list.add( new Route( method, routePattern, handler ) );
     }
 
-    public RouteMatch matches( final String method, final String path )
+    public RouteMatch matches( final String method, final String path, final String contextPath )
     {
         for ( final Route route : this.list )
         {
-            if ( route.matches( method, path ) )
+            if ( route.matches( method, path, contextPath ) )
             {
-                return newRouteMatch( route, path );
+                return newRouteMatch( route, path, contextPath );
             }
         }
 
-        if ( method.equals( "HEAD" ) )
+        if ( "HEAD".equalsIgnoreCase( method ) )
         {
-            return matches( "GET", path );
+            return matches( "GET", path, contextPath );
         }
 
         return null;
     }
 
-    private RouteMatch newRouteMatch( final Route route, final String path )
+    private RouteMatch newRouteMatch( final Route route, final String path, final String contextPath )
     {
-        return new RouteMatchImpl( route.getPathParams( path ), route.getHandler() );
+        return new RouteMatchImpl( route.getPathParams( path, contextPath ), route.getHandler() );
     }
 }

@@ -2,8 +2,9 @@ language: java
 sudo: false
 
 jdk:
-  - oraclejdk11
+  - openjdk11
 
+install: true
 script: ./gradlew build
 
 cache:
