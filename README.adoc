@@ -10,8 +10,12 @@ This library implements a simple HTTP router that can be used in XP app's main c
 |XP Version
 |Dependency
 
+|2.0.1
+|7.0.x
+|com.enonic.lib:lib-router:2.0.1
+
 |2.0.0
-|7.x
+|7.0.x
 |com.enonic.lib:lib-router:2.0.0
 
 |1.0.1
