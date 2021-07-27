@@ -12,6 +12,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class RouteTest
 {
     @Test
+    void param() {
+        final Route route = new Route( "*", RoutePattern.compile( "/persons/{id}" ), null );
+        final Optional<Map<String, String>> match = route.match( "GET", "context/persons/1", "context" );
+        assertTrue( match.isPresent() );
+        assertEquals( "1", match.get().get( "id" ) );
+    }
+    @Test
     void matchesEverything()
     {
         final Route route = new Route( "*", RoutePattern.compile( "/match/everything/{path:.+}" ), null );

@@ -16,7 +16,7 @@ import com.google.common.cache.CacheBuilder;
 
 final class RoutePattern
 {
-    private final static Pattern PARAM = Pattern.compile( "\\{(\\w+)(?::(.+))?}" );
+    private final static Pattern PARAM = Pattern.compile( "\\{(?<name>\\w+)(?::(?<expr>.+))?}" );
 
     private static final Pattern SLASH_PATTERN = Pattern.compile( "/" );
 
@@ -73,8 +73,8 @@ final class RoutePattern
             final Matcher matcher = PARAM.matcher( part );
             if ( matcher.matches() )
             {
-                pathParams.add( matcher.group( 1 ) );
-                final String partExpr = Objects.requireNonNullElse( matcher.group( 2 ), "[^/]+" );
+                pathParams.add( matcher.group( "name" ) );
+                final String partExpr = Objects.requireNonNullElse( matcher.group( "expr" ), "[^/]+" );
 
                 regexp.append( "/(" ).append( partExpr ).append( ")" );
             }
