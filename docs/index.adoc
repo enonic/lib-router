@@ -93,17 +93,29 @@ router.all('/persons', function(req) {
 });
 ----
 
-And to match for a generic method and path:
+image::https://img.shields.io/badge/3.+-blue.svg[role="left"]
+Match URL with and without trailing slash:
 
 [source,js]
 ----
-router.route('PATCH', '/persons', function(req) {
+router.route('GET', '/persons/?', function(req) {
   ...
 });
 ----
 
-NOTE: Before version 3.0.0 trailing slashes were ignored. `router.get('/person', ...)` would match both `/person` and `/person/`.
-If you need old behavior add optional trailing slash in pattern: `router.get('/person/?', ...)`
+NOTE: Before version 3.0.0 trailing slashes were always ignored.
+Starting from version 3.0.0 trailing slash should be explicitly specified in pattern.
+
+image::https://img.shields.io/badge/3.+-blue.svg[role="left"]
+Specify multiple patterns for the same handler:
+
+[source,js]
+----
+router.route('GET', ['/static', '/static/{path:.*}'], function(req) {
+  ...
+});
+----
+
 
 === Filters
 
