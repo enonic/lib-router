@@ -30,11 +30,12 @@ function Router() {
  * });
  *
  * @param {String} method Method to match. '*' for everyone.
- * @param {String} pattern Path pattern to match.
+ * @param {String|String[]} pattern Path pattern to match.
  * @param handler Handler to execute on match.
  */
 Router.prototype.route = function (method, pattern, handler) {
-    this.router.add(method != null ? method.toUpperCase() : null, pattern || '', handler);
+    const router = this.router;
+    [].concat(pattern || '').forEach(p => router.add(method, p, handler));
 };
 
 /**
@@ -46,7 +47,7 @@ Router.prototype.route = function (method, pattern, handler) {
  *  ...
  * });
  *
- * @param {String} pattern Path pattern to match.
+ * @param {String|String[]} pattern Path pattern to match.
  * @param handler Handler to execute on match.
  */
 Router.prototype.get = function (pattern, handler) {
@@ -62,7 +63,7 @@ Router.prototype.get = function (pattern, handler) {
  *  ...
  * });
  *
- * @param {String} pattern Path pattern to match.
+ * @param {String|String[]} pattern Path pattern to match.
  * @param handler Handler to execute on match.
  */
 Router.prototype.post = function (pattern, handler) {
@@ -78,7 +79,7 @@ Router.prototype.post = function (pattern, handler) {
  *  ...
  * });
  *
- * @param {String} pattern Path pattern to match.
+ * @param {String|String[]} pattern Path pattern to match.
  * @param handler Handler to execute on match.
  */
 Router.prototype.delete = function (pattern, handler) {
@@ -94,7 +95,7 @@ Router.prototype.delete = function (pattern, handler) {
  *  ...
  * });
  *
- * @param {String} pattern Path pattern to match.
+ * @param {String|String[]} pattern Path pattern to match.
  * @param handler Handler to execute on match.
  */
 Router.prototype.put = function (pattern, handler) {
@@ -110,7 +111,7 @@ Router.prototype.put = function (pattern, handler) {
  *  ...
  * });
  *
- * @param {String} pattern Path pattern to match.
+ * @param {String|String[]} pattern Path pattern to match.
  * @param handler Handler to execute on match.
  */
 Router.prototype.head = function (pattern, handler) {
@@ -126,7 +127,7 @@ Router.prototype.head = function (pattern, handler) {
  *  ...
  * });
  *
- * @param {String} pattern Path pattern to match.
+ * @param {String|String[]} pattern Path pattern to match.
  * @param handler Handler to execute on match.
  */
 Router.prototype.all = function (pattern, handler) {

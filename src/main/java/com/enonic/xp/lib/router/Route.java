@@ -1,5 +1,6 @@
 package com.enonic.xp.lib.router;
 
+import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 
@@ -15,7 +16,7 @@ final class Route
 
     Route( final String method, final RoutePattern pattern, final JSObject handler )
     {
-        this.method = "*".equals( method ) ? null : method;
+        this.method = "*".equals( method ) ? null : method.toUpperCase( Locale.ROOT );
         this.pattern = pattern;
         this.handler = handler;
     }
