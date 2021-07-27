@@ -1,20 +1,16 @@
 package com.enonic.xp.lib.router;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import com.google.common.collect.Lists;
+import java.util.Map;
+import java.util.Optional;
 
 import jdk.nashorn.api.scripting.JSObject;
 
 @SuppressWarnings("WeakerAccess")
 public final class Router
 {
-    private final List<Route> list;
-
-    public Router()
-    {
-        this.list = Lists.newArrayList();
-    }
+    private final List<Route> list = new ArrayList<>();
 
     public void add( final String method, final String pattern, final JSObject handler )
     {
@@ -26,9 +22,10 @@ public final class Router
     {
         for ( final Route route : this.list )
         {
-            if ( route.matches( method, path, contextPath ) )
+            final Optional<Map<String, String>> matches = route.match( method, path, contextPath );
+            if ( matches.isPresent() )
             {
-                return newRouteMatch( route, path, contextPath );
+                return new RouteMatchImpl( matches.get(), route.getHandler() );
             }
         }
 
@@ -38,10 +35,5 @@ public final class Router
         }
 
         return null;
-    }
-
-    private RouteMatch newRouteMatch( final Route route, final String path, final String contextPath )
-    {
-        return new RouteMatchImpl( route.getPathParams( path, contextPath ), route.getHandler() );
     }
 }
