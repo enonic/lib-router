@@ -9,7 +9,7 @@ To start using this library, put the following into your `build.gradle` file:
 [source,groovy]
 ----
 dependencies {
-  include 'com.enonic.lib:lib-router:2.1.0'
+  include 'com.enonic.lib:lib-router:3.0.0'
 }
 ----
 
@@ -101,6 +101,9 @@ router.route('PATCH', '/persons', function(req) {
   ...
 });
 ----
+
+NOTE: Before version 3.0.0 trailing slashes were ignored. `router.get('/person', ...)` would match both `/person` and `/person/`.
+If you need old behavior add optional trailing slash in pattern: `router.get('/person/?', ...)`
 
 === Filters
 

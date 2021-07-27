@@ -1,6 +1,7 @@
 package com.enonic.xp.lib.router;
 
 import java.util.Map;
+import java.util.Optional;
 
 import jdk.nashorn.api.scripting.JSObject;
 
@@ -19,20 +20,17 @@ final class Route
         this.handler = handler;
     }
 
-    boolean matches( final String method, final String path, final String contextPath )
+    Optional<Map<String, String>> match( final String method, final String path, final String contextPath )
     {
-        if ( path.endsWith( "/" ) )
+        final boolean matchesMethod = this.method == null || this.method.equalsIgnoreCase( method );
+        if ( matchesMethod )
         {
-            return matches( method, path.substring( 0, path.length() - 1 ), contextPath );
+            return this.pattern.match( path, contextPath ) ;
         }
-
-        final boolean matchesMethod = ( this.method == null ) || this.method.equalsIgnoreCase( method );
-        return matchesMethod && this.pattern.matches( contextPath, path );
-    }
-
-    Map<String, String> getPathParams( final String path, final String contextPath )
-    {
-        return this.pattern.getPathParams( path, contextPath );
+        else
+        {
+            return Optional.empty();
+        }
     }
 
     JSObject getHandler()
