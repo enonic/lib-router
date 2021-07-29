@@ -12,7 +12,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class RouteTest
 {
     @Test
-    void param() {
+    void param()
+    {
         final Route route = new Route( "*", RoutePattern.compile( "/persons/{id}" ), null );
         final Optional<Map<String, String>> match = route.match( "GET", "context/persons/1", "context" );
         assertTrue( match.isPresent() );
@@ -33,7 +34,7 @@ class RouteTest
     }
 
     @Test
-    void trailingSlash_no_match()
+    void noTrailingSlash()
     {
         final Route route = new Route( "*", RoutePattern.compile( "/match" ), null );
         assertTrue( route.match( "GET", "context/match", "context" ).isPresent() );
@@ -41,7 +42,15 @@ class RouteTest
     }
 
     @Test
-    void trailingSlash_explicit_match()
+    void trailingSlash()
+    {
+        final Route route = new Route( "*", RoutePattern.compile( "/match/" ), null );
+        assertFalse( route.match( "GET", "context/match", "context" ).isPresent() );
+        assertTrue( route.match( "GET", "context/match/", "context" ).isPresent() );
+    }
+
+    @Test
+    void optionalTrailingSlash()
     {
         final Route route = new Route( "*", RoutePattern.compile( "/match/?" ), null );
         assertTrue( route.match( "GET", "context/match", "context" ).isPresent() );
@@ -56,10 +65,19 @@ class RouteTest
     }
 
     @Test
-    void emptyPatern()
+    void emptyPattern()
     {
         final Route route = new Route( "*", RoutePattern.compile( "" ), null );
         assertTrue( route.match( "GET", "context", "context" ).isPresent() );
         assertFalse( route.match( "GET", "context/", "context" ).isPresent() );
+    }
+
+    @Test
+    void pathAsPattern()
+    {
+        final Route route = new Route( "*", RoutePattern.compile( "/a{path:/test1|/test2}" ), null );
+        final Optional<Map<String, String>> match = route.match( "GET", "context/a/test1", "context" );
+        assertTrue( match.isPresent() );
+        assertEquals( "/test1", match.get().get( "path" ) );
     }
 }
