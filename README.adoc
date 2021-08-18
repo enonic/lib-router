@@ -40,5 +40,5 @@ To build this project, execute the following:
 ./gradlew clean build
 ----
 
-== https://github.com/enonic/lib-router/tree/master/docs/index.adoc[Documentation]
+== https://developer.enonic.com/docs/router-library/master[Documentation]
 
