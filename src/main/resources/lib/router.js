@@ -18,6 +18,7 @@
 function Router() {
     this.router = __.newBean('com.enonic.xp.lib.router.Router');
     this.filters = [];
+    this.routes = [];
 }
 
 /**
@@ -35,7 +36,8 @@ function Router() {
  */
 Router.prototype.route = function (method, pattern, handler) {
     const router = this.router;
-    [].concat(pattern || '').forEach(p => router.add(method, p, handler));
+    const routes = this.routes;
+    [].concat(pattern || '').forEach(p => routes.push([router.newRoute(method, p), handler]));
 };
 
 /**
@@ -150,17 +152,31 @@ Router.prototype.filter = function (filter) {
 };
 
 function handleRoute(scope, req) {
-    var match = scope.router.matches(req.method, req.rawPath, req.contextPath);
+    let result = matches(scope.routes, req.method, req.rawPath, req.contextPath);
+    if (result) {
+        req.pathParams = {};
+        for (const property in result.pathParams) {
+            req.pathParams[property] = result.pathParams[property];
+        }
 
-    if (!match) {
+        return result.handler(req);
+    } else {
         return {
             status: 404
         };
     }
+}
 
-    req.pathParams = {};
-    match.appendPathParams(req.pathParams);
-    return match.getHandler()(req);
+function matches(routes, method, path, contextPath) {
+    for (const route of routes) {
+        let match = route[0].match(method, path, contextPath);
+        if (match) {
+            return {pathParams: match, handler: route[1]};
+        }
+    }
+    if (method.toUpperCase() === 'HEAD') {
+        return matches(routes, 'GET', path, contextPath);
+    }
 }
 
 function nextInChain(scope, filters) {

@@ -5,29 +5,29 @@ const lib = require('/lib/router');
 exports.testGet_multiple_patterns = () => {
     const router = lib();
 
-    let path;
+    let result;
     router.get(['/static','/static/{path:.*}'], (req) => {
-        path = req.pathParams.path;
+        return req.pathParams.path;
     });
 
-    router.dispatch({
-        method : 'GET',
-        rawPath: '/c/static/',
-        contextPath: '/c'
-    });
-    t.assertEquals('', path)
-
-    router.dispatch({
+    result = router.dispatch({
         method : 'GET',
         rawPath: '/c/static/b/c',
         contextPath: '/c'
     });
-    t.assertEquals('b/c', path)
+    t.assertEquals('b/c', result)
 
-    router.dispatch({
+    result = router.dispatch({
+        method : 'GET',
+        rawPath: '/c/static/',
+        contextPath: '/c'
+    });
+    t.assertEquals('', result)
+
+    result = router.dispatch({
         method : 'GET',
         rawPath: '/c/static',
         contextPath: '/c'
     });
-    t.assertEquals(undefined, path)
+    t.assertEquals(undefined, result)
 }

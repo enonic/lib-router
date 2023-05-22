@@ -1,39 +1,38 @@
 package com.enonic.xp.lib.router;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Locale;
 import java.util.Map;
-import java.util.Optional;
 
-import jdk.nashorn.api.scripting.JSObject;
-
-@SuppressWarnings("WeakerAccess")
 public final class Router
 {
-    private final List<Route> list = new ArrayList<>();
-
-    public void add( final String method, final String pattern, final JSObject handler )
+    public Route newRoute( final String method, final String pattern )
     {
-        final RoutePattern routePattern = RoutePattern.compile( pattern );
-        this.list.add( new Route( method, routePattern, handler ) );
+        return new Route( method, pattern );
     }
 
-    public RouteMatch matches( final String method, final String path, final String contextPath )
+    public static final class Route
     {
-        for ( final Route route : this.list )
+        private final String method;
+
+        private final RoutePattern pattern;
+
+        Route( final String method, final String pattern )
         {
-            final Optional<Map<String, String>> matches = route.match( method, path, contextPath );
-            if ( matches.isPresent() )
+            this.method = "*".equals( method ) ? null : method.toUpperCase( Locale.ROOT );
+            this.pattern = RoutePattern.compile( pattern );
+        }
+
+        public Map<String, String> match( final String method, final String path, final String contextPath )
+        {
+            final boolean matchesMethod = this.method == null || this.method.equalsIgnoreCase( method );
+            if ( matchesMethod )
             {
-                return new RouteMatchImpl( matches.get(), route.getHandler() );
+                return this.pattern.match( path, contextPath );
+            }
+            else
+            {
+                return null;
             }
         }
-
-        if ( "HEAD".equalsIgnoreCase( method ) )
-        {
-            return matches( "GET", path, contextPath );
-        }
-
-        return null;
     }
 }
