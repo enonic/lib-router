@@ -6,7 +6,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -31,13 +30,13 @@ final class RoutePattern
         this.patternCache = CacheBuilder.newBuilder().maximumSize( 10 ).build();
     }
 
-    Optional<Map<String, String>> match( final String path, final String contextPath )
+    Map<String, String> match( final String path, final String contextPath )
     {
         final Matcher matcher = pattern( contextPath ).matcher( path );
 
         if ( !matcher.matches() )
         {
-            return Optional.empty();
+            return null;
         }
         final Map<String, String> map = new LinkedHashMap<>();
 
@@ -46,7 +45,7 @@ final class RoutePattern
             map.put( this.pathParams.get( i ), matcher.group( i + 1 ) );
         }
 
-        return Optional.of( Collections.unmodifiableMap( map ) );
+        return Collections.unmodifiableMap( map );
     }
 
     private Pattern pattern( final String contextPath )

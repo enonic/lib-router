@@ -1,83 +1,82 @@
 package com.enonic.xp.lib.router;
 
 import java.util.Map;
-import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 class RouteTest
 {
     @Test
     void param()
     {
-        final Route route = new Route( "*", RoutePattern.compile( "/persons/{id}" ), null );
-        final Optional<Map<String, String>> match = route.match( "GET", "context/persons/1", "context" );
-        assertTrue( match.isPresent() );
-        assertEquals( "1", match.get().get( "id" ) );
+        final Router.Route route = new Router.Route( "*", "/persons/{id}" );
+        final Map<String, String> match = route.match( "GET", "context/persons/1", "context" );
+        assertNotNull( match );
+        assertEquals( "1", match.get( "id" ) );
     }
 
     @Test
     void matchesEverything()
     {
-        final Route route = new Route( "*", RoutePattern.compile( "/match/everything/{path:.+}" ), null );
-        final Optional<Map<String, String>> match = route.match( "GET", "context/match/everything/extra", "context" );
-        assertTrue( match.isPresent() );
-        assertEquals( "extra", match.get().get( "path" ) );
+        final Router.Route route = new Router.Route( "*", "/match/everything/{path:.+}" );
+        final Map<String, String> match = route.match( "GET", "context/match/everything/extra", "context" );
+        assertNotNull( match );
+        assertEquals( "extra", match.get( "path" ) );
 
-        final Optional<Map<String, String>> matchWithSlash = route.match( "GET", "context/match/everything/extra/", "context" );
-        assertTrue( matchWithSlash.isPresent() );
-        assertEquals( "extra/", matchWithSlash.get().get( "path" ) );
+        final Map<String, String> matchWithSlash = route.match( "GET", "context/match/everything/extra/", "context" );
+        assertNotNull( matchWithSlash );
+        assertEquals( "extra/", matchWithSlash.get( "path" ) );
     }
 
     @Test
     void noTrailingSlash()
     {
-        final Route route = new Route( "*", RoutePattern.compile( "/match" ), null );
-        assertTrue( route.match( "GET", "context/match", "context" ).isPresent() );
-        assertFalse( route.match( "GET", "context/match/", "context" ).isPresent() );
+        final Router.Route route = new Router.Route( "*", "/match" );
+        assertNotNull( route.match( "GET", "context/match", "context" ) );
+        assertNull( route.match( "GET", "context/match/", "context" ) );
     }
 
     @Test
     void trailingSlash()
     {
-        final Route route = new Route( "*", RoutePattern.compile( "/match/" ), null );
-        assertFalse( route.match( "GET", "context/match", "context" ).isPresent() );
-        assertTrue( route.match( "GET", "context/match/", "context" ).isPresent() );
+        final Router.Route route = new Router.Route( "*", "/match/" );
+        assertNull( route.match( "GET", "context/match", "context" ) );
+        assertNotNull( route.match( "GET", "context/match/", "context" ) );
     }
 
     @Test
     void optionalTrailingSlash()
     {
-        final Route route = new Route( "*", RoutePattern.compile( "/match/?" ), null );
-        assertTrue( route.match( "GET", "context/match", "context" ).isPresent() );
-        assertTrue( route.match( "GET", "context/match/", "context" ).isPresent() );
+        final Router.Route route = new Router.Route( "*", "/match/?" );
+        assertNotNull( route.match( "GET", "context/match", "context" ) );
+        assertNotNull( route.match( "GET", "context/match/", "context" ) );
     }
 
     @Test
     void specialRegexCharInContext()
     {
-        final Route route = new Route( "*", RoutePattern.compile( "/match/everything/{path:.+}" ), null );
-        assertTrue( route.match( "GET", "context()/match/everything/anything", "context()" ).isPresent() );
+        final Router.Route route = new Router.Route( "*", "/match/everything/{path:.+}" );
+        assertNotNull( route.match( "GET", "context()/match/everything/anything", "context()" ) );
     }
 
     @Test
     void emptyPattern()
     {
-        final Route route = new Route( "*", RoutePattern.compile( "" ), null );
-        assertTrue( route.match( "GET", "context", "context" ).isPresent() );
-        assertFalse( route.match( "GET", "context/", "context" ).isPresent() );
+        final Router.Route route = new Router.Route( "*", "" );
+        assertNotNull( route.match( "GET", "context", "context" ) );
+        assertNull( route.match( "GET", "context/", "context" ) );
     }
 
     @Test
     void pathAsPattern()
     {
-        final Route route = new Route( "*", RoutePattern.compile( "/a{path:/test1|/test2}" ), null );
-        final Optional<Map<String, String>> match = route.match( "GET", "context/a/test1", "context" );
-        assertTrue( match.isPresent() );
-        assertEquals( "/test1", match.get().get( "path" ) );
+        final Router.Route route = new Router.Route( "*", "/a{path:/test1|/test2}" );
+        final Map<String, String> match = route.match( "GET", "context/a/test1", "context" );
+        assertNotNull( match );
+        assertEquals( "/test1", match.get( "path" ) );
     }
 }
