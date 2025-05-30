@@ -121,6 +121,22 @@ Router.prototype.head = function (pattern, handler) {
 };
 
 /**
+ * Adds a route that matches PATCH method.
+ *
+ * @example
+ * // Add a route.
+ * router.patch('/persons', function(req) {
+ *  ...
+ * });
+ *
+ * @param {String|String[]} pattern Path pattern to match.
+ * @param handler Handler to execute on match.
+ */
+Router.prototype.patch = function (pattern, handler) {
+    this.route('PATCH', pattern, handler);
+};
+
+/**
  * Adds a route that matches all methods.
  *
  * @example
