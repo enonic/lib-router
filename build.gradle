@@ -2,31 +2,31 @@ plugins {
     id 'java'
     id 'jacoco'
     id 'maven-publish'
-    id 'com.enonic.defaults' version '2.1.6'
-    id 'com.enonic.xp.base' version '3.6.2'
+
+    alias( libs.plugins.enonic.defaults )
+    alias( libs.plugins.enonic.xp.base )
 }
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(11)
+        languageVersion = JavaLanguageVersion.of(21)
     }
 }
 
 repositories {
     mavenCentral()
-    xp.enonicRepo()
+    xp.enonicRepo('dev')
 }
 
 dependencies {
     compileOnly "com.enonic.xp:script-api:${xpVersion}"
 
-    testImplementation( platform( "org.junit:junit-bom:5.13.4" ) )
-    testImplementation( platform( "org.mockito:mockito-bom:5.20.0" ) )
-    testImplementation 'org.junit.jupiter:junit-jupiter'
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-    testRuntimeOnly 'org.junit.vintage:junit-vintage-engine'
-    testImplementation 'org.mockito:mockito-junit-jupiter'
     testImplementation "com.enonic.xp:testing:${xpVersion}"
+    testImplementation platform( libs.junit.bom )
+    testImplementation platform( libs.mockito.bom )
+    testImplementation libs.junit.jupiter
+    testImplementation libs.mockito.jupiter
+    testRuntimeOnly libs.junit.launcher
 }
 
 test {
