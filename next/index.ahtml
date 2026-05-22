@@ -469,7 +469,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sectionbody">
 <div class="imageblock right">
 <div class="content">
-<img src="https://img.shields.io/badge/xp-7.+-blue.svg" alt="xp 7.+ blue">
+<img src="https://img.shields.io/badge/xp-8.+-blue.svg" alt="xp 8.+ blue">
 </div>
 </div>
 <div class="paragraph">
@@ -481,7 +481,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">dependencies {
-  include 'com.enonic.lib:lib-router:3.1.0'
+  include 'com.enonic.lib:lib-router:4.0.0'
 }</code></pre>
 </div>
 </div>
@@ -575,11 +575,6 @@ router.get('/persons/{id}', function(req) {
 });</code></pre>
 </div>
 </div>
-<div class="imageblock left">
-<div class="content">
-<img src="https://img.shields.io/badge/3.+-blue.svg" alt="3.+ blue">
-</div>
-</div>
 <div class="paragraph">
 <p>Match URL with and without trailing slash:</p>
 </div>
@@ -602,11 +597,6 @@ Starting from version 3.0.0 trailing slash should be explicitly specified in pat
 </td>
 </tr>
 </table>
-</div>
-<div class="imageblock left">
-<div class="content">
-<img src="https://img.shields.io/badge/3.+-blue.svg" alt="3.+ blue">
-</div>
 </div>
 <div class="paragraph">
 <p>Specify multiple patterns for the same handler:</p>
@@ -912,14 +902,14 @@ router.filter(function(req, next) {
 <h2 id="compatibility"><a class="link" href="#compatibility">Compatibility</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This library requires Enonic XP release <strong>7.0.0</strong> or higher.</p>
+<p>This library requires Enonic XP release <strong>8.0.0</strong> or higher.</p>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-05-22 10:17:49 UTC
+Last updated 2026-05-22 10:24:19 UTC
 </div>
 </div>
 </body>
