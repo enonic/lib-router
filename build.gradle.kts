@@ -4,13 +4,7 @@ plugins {
     id("maven-publish")
 
     alias(libs.plugins.enonic.defaults)
-    alias(libs.plugins.enonic.xp.base)
-}
-
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(25)
-    }
+    id("com.enonic.xp.base")
 }
 
 repositories {
@@ -19,7 +13,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly("com.enonic.xp:script-api:${property("xpVersion")}")
+    compileOnly(xplibs.api.script)
 
     testImplementation("com.enonic.xp:testing:${property("xpVersion")}")
     testImplementation(platform(libs.junit.bom))
