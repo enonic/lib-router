@@ -1,6 +1,6 @@
 name: Gradle Build
 
-on: [ push ]
+on: [ push, workflow_dispatch ]
 
 jobs:
   build:
@@ -13,6 +13,10 @@ jobs:
         with:
           repoUser: ci
           repoPassword: ${{ secrets.ARTIFACTORY_PASSWORD }}
+          codecovToken: ${{ secrets.CODECOV_TOKEN }}
+          releaseBranch: |
+            3.x
+            4.x
 
   release:
     runs-on: ubuntu-latest
