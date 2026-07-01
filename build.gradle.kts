@@ -41,3 +41,18 @@ tasks.check {
 artifacts {
     add("archives", tasks.jar)
 }
+
+// Assemble the @enonic-types/lib-router npm package (published on release by the CI npmPublish step).
+val assembleTypes = tasks.register<Copy>("assembleTypes") {
+    from("types")
+    into(layout.buildDirectory.dir("types"))
+    filesMatching("package.json") {
+        filter { line ->
+            line.replace(Regex("\"version\":\\s*\"[^\"]*\""), "\"version\": \"${project.version}\"")
+        }
+    }
+}
+
+tasks.jar {
+    dependsOn(assembleTypes)
+}
