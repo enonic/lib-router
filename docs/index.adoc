@@ -2,6 +2,8 @@
 
 image::https://img.shields.io/badge/xp-8.+-blue.svg[role="right"]
 
+NOTE: Versions 4.x target XP 8+.
+
 This library implements a simple HTTP router. It should be used from an application's `webapp.js` controller.
 
 To start using this library, put the following into your `build.gradle` file:
@@ -101,9 +103,6 @@ router.route('GET', '/persons/?', function(req) {
   ...
 });
 ----
-
-NOTE: Before version 3.0.0 trailing slashes were always ignored.
-Starting from version 3.0.0 trailing slash should be explicitly specified in pattern.
 
 Specify multiple patterns for the same handler:
 
