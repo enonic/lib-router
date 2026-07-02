@@ -1,7 +1,5 @@
 = Router Library
 
-image::https://img.shields.io/badge/xp-8.+-blue.svg[role="right"]
-
 NOTE: Versions 4.x target XP 8+.
 
 This library implements a simple HTTP router. It should be used from an application's `webapp.js` controller.
@@ -112,7 +110,6 @@ router.route('GET', ['/static', '/static/{path:.*}'], function(req) {
   ...
 });
 ----
-
 
 === Filters
 
