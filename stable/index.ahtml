@@ -467,18 +467,6 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="content">
 <div id="preamble">
 <div class="sectionbody">
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-Versions 3.x target XP 7+.
-</td>
-</tr>
-</table>
-</div>
 <div class="imageblock right">
 <div class="content">
 <img src="https://img.shields.io/badge/xp-7.+-blue.svg" alt="xp 7.+ blue">
@@ -493,7 +481,7 @@ Versions 3.x target XP 7+.
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-groovy" data-lang="groovy">dependencies {
-  include 'com.enonic.lib:lib-router:3.2.0'
+  include 'com.enonic.lib:lib-router:3.1.0'
 }</code></pre>
 </div>
 </div>
@@ -931,7 +919,7 @@ router.filter(function(req, next) {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-07-02 06:34:27 UTC
+Last updated 2026-07-02 07:37:05 UTC
 </div>
 </div>
 </body>
