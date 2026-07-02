@@ -1,5 +1,7 @@
 = Router Library
 
+NOTE: Versions 3.x target XP 7+.
+
 image::https://img.shields.io/badge/xp-7.+-blue.svg[role="right"]
 
 This library implements a simple HTTP router. It should be used from an application's `webapp.js` controller.
